@@ -1,0 +1,18 @@
+# ide
+.vscode
+.idea
+.cache
+
+# Node
+node_modules/
+npm-debug.log
+
+# OS metadata
+.DS_Store
+Thumbs.db
+
+# Ignore built ts files
+dist/
+
+# Snyk code
+.dccache
