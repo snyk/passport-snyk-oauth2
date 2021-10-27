@@ -1,7 +1,6 @@
-import { _StrategyOptionsBase } from 'passport-oauth2';
-import { OutgoingHttpHeaders } from 'http';
+import { StrategyOptionsWithRequest } from 'passport-oauth2';
 
-export interface StrategyOptions extends _StrategyOptionsBase {
+export interface SnykStrategyOptions extends StrategyOptionsWithRequest {
   authorizationURL: string;
   tokenURL: string;
   clientID: string;
@@ -10,28 +9,17 @@ export interface StrategyOptions extends _StrategyOptionsBase {
   nonce: string;
   scope: string | string[];
   state: any;
-  passReqToCallback?: any;
-  customHeaders?: OutgoingHttpHeaders | undefined;
-  scopeSeparator?: string;
-  pkce?: any;
-  sessionKey?: string;
-  store?: any;
-  proxy?: boolean;
-  skipUserProfile?: boolean;
-  userProfileURL?: string;
+  profileFunc?: ProfileFunc;
 }
 
-export interface UserProfileCallback {
+export interface ProfileCallback {
   (error: Error | null): void;
 }
 
-export interface UserProfileCallback {
+export interface ProfileCallback {
   (error: Error | null, data: any): void;
 }
 
-export interface UserDetails {
-  id: string;
-  username: string;
-  email: string;
-  orgs: string[];
+export interface ProfileFunc {
+  (accessToken: string): Promise<any>;
 }
