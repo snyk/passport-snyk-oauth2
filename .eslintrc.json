@@ -21,7 +21,7 @@
            "templates": true,
            "lang": "en_US",
            "minLength": 3,
-           "skipWords": ["snyk", "func", "snyk-oauth2", "Orgs"]
+           "skipWords": ["snyk", "func", "snyk-oauth2", "Orgs", "exmpl", "req", "supertest", "uuidv4", "resave", "nock", "pathname", "axios"]
           }
         ]
     },

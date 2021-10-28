@@ -49,5 +49,6 @@ export default class SnykOAuth2Strategy extends Strategy {
         return done(error);
       }
     }
+    done(null, 'No profile function provided');
   }
 }
