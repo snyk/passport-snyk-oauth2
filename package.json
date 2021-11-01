@@ -26,7 +26,13 @@
     "url": "https://github.com/snyk/passport-snyk-oauth2/issues"
   },
   "homepage": "https://github.com/snyk/passport-snyk-oauth2#readme",
-  "license": "ISC",
+  "license": "MIT",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://opensource.org/licenses/MIT"
+    }
+  ],
   "devDependencies": {
     "@babel/core": "^7.15.8",
     "@babel/preset-env": "^7.15.8",
