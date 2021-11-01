@@ -1,7 +1,7 @@
 {
-  "name": "passport-snyk-oauth2",
-  "version": "1.0.0",
-  "description": "",
+  "name": "@snyk/passport-snyk-oauth2",
+  "version": "0.0.0",
+  "description": "Snyk Apps Passport OAuth2 Strategy",
   "main": "./dist/index.js",
   "scripts": {
     "test": "jest",
@@ -11,8 +11,21 @@
     "format": "prettier --write 'src/**/*.ts'",
     "lint": "eslint 'src/**/*.ts'"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "passport",
+    "snyk",
+    "oauth2",
+    "snyk-apps"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/snyk/passport-snyk-oauth2.git"
+  },
+  "author": "snyk.io",
+  "bugs": {
+    "url": "https://github.com/snyk/passport-snyk-oauth2/issues"
+  },
+  "homepage": "https://github.com/snyk/passport-snyk-oauth2#readme",
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.15.8",
