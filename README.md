@@ -1,10 +1,10 @@
 # @snyk/passport-snyk-oauth2
 
-Snyk's OAuth2 strategy for [Passortjs](https://www.passportjs.org/) to make authenticating Snyk Apps seamless. 
+Snyk's OAuth2 strategy for [Passportjs](https://www.passportjs.org/) to make authenticating Snyk Apps seamless. 
 
 # Intro
 
-We recently launched [Snyk Apps](https://docs.snyk.io/features/integrations/snyk-apps) which allows developers to create their own apps for Snyk and extend the functionality of the Snyk platform. It is available for all languages or framework of your choice. We used [Node.js](https://nodejs.dev/) and [TypeScript](https://www.typescriptlang.org/) to demo the authencition flow and usage of [Snyk Apps](https://docs.snyk.io/features/integrations/snyk-apps) using our [Snyk App Demo](https://github.com/snyk/snyk-apps-demo). In the [Snyk App Demo](https://github.com/snyk/snyk-apps-demo) we use [Passortjs](https://www.passportjs.org/) to make the authentication flow and implementation of the same easier for the user. To further extend this, we have created `@snyk/passport-snyk-oauth2`. This can be easily integrated with [Passortjs](https://www.passportjs.org/) and make your developer experience even better.
+We recently launched [Snyk Apps](https://docs.snyk.io/features/integrations/snyk-apps) which allows developers to create their own apps for Snyk and extend the functionality of the Snyk platform. It is available for all languages or framework of your choice. We used [Node.js](https://nodejs.dev/) and [TypeScript](https://www.typescriptlang.org/) to demo the authencition flow and usage of [Snyk Apps](https://docs.snyk.io/features/integrations/snyk-apps) using our [Snyk App Demo](https://github.com/snyk/snyk-apps-demo). In the [Snyk App Demo](https://github.com/snyk/snyk-apps-demo) we use [Passportjs](https://www.passportjs.org/) to make the authentication flow and implementation of the same easier for the user. To further extend this, we have created `@snyk/passport-snyk-oauth2`. This can be easily integrated with [Passportjs](https://www.passportjs.org/) and make your developer experience even better.
 
 # Usage
 
