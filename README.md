@@ -12,6 +12,7 @@ We recently launched [Snyk Apps](https://docs.snyk.io/features/integrations/snyk
 
 ```
 npm install @snyk/passport-snyk-oauth2
+// or
 yarn add @snyk/passport-snyk-oauth2
 ```
 
