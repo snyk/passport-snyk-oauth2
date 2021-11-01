@@ -1,3 +1,8 @@
+/**
+ * Since we are inheriting the passport OAuth2 strategy
+ * with very little code change. Most of the test cases
+ * are already covered.
+ */
 import { testData, setupExpressApp } from '../helpers/setupApp';
 import supertest from 'supertest';
 import passport from 'passport';
@@ -7,7 +12,7 @@ describe('Strategy with passport', () => {
   const request = supertest(app);
 
   // This will trigger the auth flow
-  app.get('/auth', passport.authenticate('snyk-oauth2'));
+  app.get('/auth', passport.authenticate('snyk-oauth2', { state: 'test' }));
   app.get(
     '/callback',
     passport.authenticate('snyk-oauth2', {
@@ -39,5 +44,12 @@ describe('Strategy with passport', () => {
     expect(redirectURL.searchParams.get('redirect_uri')).toBe(testData.callbackURL);
     expect(redirectURL.searchParams.get('scope')).toBe(testData.scope);
     expect(redirectURL.searchParams.get('client_id')).toBe(testData.clientID);
+  });
+
+  it('should call the failure mock when not authenticated', async () => {
+    await request.get('/auth');
+    const responseTwo = await request.get(`/callback?code=${1234}&scope=apps%3Abeta&state=test`);
+    expect(responseTwo.statusCode).toBe(302);
+    expect(responseTwo.header.location).toBe('/callback/failure');
   });
 });
