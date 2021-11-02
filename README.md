@@ -71,6 +71,7 @@ passport.use(
 import express from 'express';
 const app = express();
 
+// Kick off the auth flow
 app.get('/auth', passport.authenticate('snyk-oauth2'));
 
 app.get(
