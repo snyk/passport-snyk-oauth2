@@ -1,0 +1,53 @@
+version: 2.1
+
+defaults: &defaults
+  resource_class: small
+  docker:
+    - image: circleci/node:14-buster
+  working_directory: ~/passport-snyk-oauth2
+
+jobs:
+  test:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/passport-snyk-oauth2
+      - run:
+          name: Install
+          command: npm ci
+      - run:
+          name: Lint
+          command: npm run lint
+      - run:
+          name: Test
+          command: npm test
+  
+  release:
+    <<: *defaults
+    steps:
+      - checkout
+      - run:
+          name: Install deps
+          command: npm install
+      - run:
+          name: Release
+          command: npx semantic-release
+
+workflows:
+  version: 2
+  test_and_publish:
+    jobs:
+      - test:
+          name: Test
+
+      - release:
+          name: Release
+          context: nodejs-lib-release
+          requires:
+            - Test
+          filters:
+            branches:
+              only:
+                - main
+                - beta
