@@ -70,7 +70,7 @@ passport.use(
 ```
 import express from 'express';
 const app = express();
-// Kicks of the authentication process
+
 app.get('/auth', passport.authenticate('snyk-oauth2'));
 
 app.get(
