@@ -3,6 +3,9 @@
   "version": "0.0.0",
   "description": "Snyk Apps Passport OAuth2 Strategy",
   "main": "./dist/index.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch",
