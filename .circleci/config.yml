@@ -14,7 +14,7 @@ jobs:
       - attach_workspace:
           at: ~/passport-snyk-oauth2
       - run:
-          name: Install
+          name: Install deps
           command: npm ci
       - run:
           name: Lint
@@ -29,7 +29,7 @@ jobs:
       - checkout
       - run:
           name: Install deps
-          command: npm install
+          command: npm ci
       - run:
           name: Build
           command: npm run build
