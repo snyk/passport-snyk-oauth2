@@ -12,7 +12,13 @@ describe('Strategy with passport', () => {
   const request = supertest(app);
 
   // This will trigger the auth flow
-  app.get('/auth', passport.authenticate('snyk-oauth2', { state: 'test' }));
+  app.get(
+    '/auth',
+    passport.authenticate('snyk-oauth2', {
+      state: 'test',
+      nonce: testData.nonce,
+    } as passport.AuthenticateOptions),
+  );
   app.get(
     '/callback',
     passport.authenticate('snyk-oauth2', {

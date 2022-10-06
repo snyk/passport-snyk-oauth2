@@ -6,9 +6,20 @@ export interface SnykStrategyOptions extends StrategyOptionsWithRequest {
   clientID: string;
   clientSecret: string;
   callbackURL: string;
-  nonce: string;
+
+  /**
+   * The nonce is required for Snyk Authentication process.
+   *
+   * @deprecated Pass it in options for passport.authenticate.
+   */
+  nonce?: string;
   scope: string | string[];
   state: any;
+
+  /**
+   * This is called is user wants to call any Snyk API
+   * to get profile for their records.
+   */
   profileFunc?: ProfileFunc;
 }
 

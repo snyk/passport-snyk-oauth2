@@ -7,12 +7,7 @@ import { SnykStrategyOptions, ProfileFunc, ProfileCallback } from './types';
  * It extends the OAuth2 strategy provided by Passport.js
  */
 export default class SnykOAuth2Strategy extends Strategy {
-  /**
-   * nonce: value is required for Snyk Authentication process
-   * profileFunc: is called is user wants to call any Snyk API
-   * to get profile for their records
-   */
-  private _nonce: string;
+  private _nonce?: string;
   private _profileFunc?: ProfileFunc;
 
   constructor(options: SnykStrategyOptions, verify: VerifyFunctionWithRequest) {
@@ -23,12 +18,15 @@ export default class SnykOAuth2Strategy extends Strategy {
   }
 
   /**
-   * Function adds the nonce value to the URL being called for authentication
+   * Function adds the nonce value to the URL being called for authentication.
+   *
+   * The nonce parameter should be passed through passport.authenticate call.
    */
-  authorizationParams(): any {
-    return {
-      nonce: this._nonce,
-    };
+  authorizationParams({ nonce }: { nonce?: string }): any {
+    // TODO throw when nonce is not passed after the nonce parameter
+    // is deleted from SnykStrategyOptions.
+    const nonceToUse = nonce ?? this._nonce;
+    return nonceToUse ? { nonce: nonceToUse } : {};
   }
 
   /**

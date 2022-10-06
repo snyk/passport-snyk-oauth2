@@ -56,7 +56,6 @@ export function setupExpressApp(): Application {
         scopeSeparator: ' ',
         state: true,
         passReqToCallback: true,
-        nonce: testData.nonce,
         // profileFunc,
       },
       // Callback function called with the
