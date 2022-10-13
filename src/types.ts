@@ -6,7 +6,6 @@ export interface SnykStrategyOptions extends StrategyOptionsWithRequest {
   clientID: string;
   clientSecret: string;
   callbackURL: string;
-  nonce: string;
   scope: string | string[];
   state: any;
   profileFunc?: ProfileFunc;
