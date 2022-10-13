@@ -1,31 +1,39 @@
 # @snyk/passport-snyk-oauth2
 
-Snyk's OAuth2 strategy for [Passportjs](https://www.passportjs.org/) to make authenticating Snyk Apps seamless. 
+Snyk's OAuth2 strategy for [Passportjs](https://www.passportjs.org/) to make authenticating Snyk Apps a seamless experience. 
 
 # Intro
 
-We recently launched [Snyk Apps](https://docs.snyk.io/features/integrations/snyk-apps) which allows developers to create their own apps for Snyk and extend the functionality of the Snyk platform. It is available for all languages or framework of your choice. We used [Node.js](https://nodejs.dev/) and [TypeScript](https://www.typescriptlang.org/) to demo the authencition flow and usage of [Snyk Apps](https://docs.snyk.io/features/integrations/snyk-apps) using our [Snyk App Demo](https://github.com/snyk/snyk-apps-demo). In the [Snyk App Demo](https://github.com/snyk/snyk-apps-demo) we use [Passportjs](https://www.passportjs.org/) to make the authentication flow and implementation of the same easier for the user. To further extend this, we have created `@snyk/passport-snyk-oauth2`. This can be easily integrated with [Passportjs](https://www.passportjs.org/) and make your developer experience even better.
+We recently launched [Snyk Apps](https://docs.snyk.io/features/integrations/snyk-apps) which allows developers to create their own apps for Snyk and extend the functionality of the Snyk platform. It is available for all languages or framework of your choice. 
+
+We used [Node.js](https://nodejs.dev/) and [TypeScript](https://www.typescriptlang.org/) to demo the authentication flow and usage of [Snyk Apps](https://docs.snyk.io/features/integrations/snyk-apps) using our [Snyk App Demo](https://github.com/snyk/snyk-apps-demo). 
+
+In the [Snyk App Demo](https://github.com/snyk/snyk-apps-demo) we use [Passportjs](https://www.passportjs.org/) to make the authentication flow and implementation of the same easier for the user. To further extend this, we have created `@snyk/passport-snyk-oauth2`. This can be easily integrated with [Passportjs](https://www.passportjs.org/) and make your developer experience even better.
 
 # Usage
 
 ## Install
 
-```
+```shell
 npm install @snyk/passport-snyk-oauth2
-// or
+```
+or
+```shell
 yarn add @snyk/passport-snyk-oauth2
 ```
 
 ## Configure Strategy
 
-```
+```typescript
 import axios from 'axios';
 import passport from 'passport';
 import SnykOAuth2Strategy from '@snyk/passport-snyk-oauth2';
 
-// User can pass their own implementation of fetching the profile
-// by providing the profileFunc implementation. Snyk OAuth2 strategy
-// will call this function to fetch the profile associated with request
+/**
+ * User can pass their own implementation of fetching the profile
+ * by providing the profileFunc implementation. Snyk OAuth2 strategy
+ * will call this function to fetch the profile associated with request
+ */
 const profileFunc: ProfileFunc = function (accessToken: string) {
     return axios.get('https://api.dev.snyk.io/v1/user/me', {
       headers: { 'Content-Type': 'application/json; charset=utf-8', Authorization: `bearer ${accessToken}` },
@@ -44,7 +52,6 @@ passport.use(
         scopeSeparator: ' ',
         state: true,
         passReqToCallback: true,
-        nonce: testData.nonce,
         profileFunc: fetchProfile,
       },
       // Callback function called with the
@@ -67,11 +74,21 @@ passport.use(
 
 ## Authentication Requests
 
-```
+```typescript
 import express from 'express';
 const app = express();
 
-app.get('/auth', passport.authenticate('snyk-oauth2'));
+/**
+ * Important to pass nonce value in authenticate options.
+ * Otherwise strategy will throw an error as it is a requirement.
+ * 
+ * You can also pass any query parameter you would like to be
+ * appended to the request URL.
+ */
+app.get('/auth', passport.authenticate('snyk-oauth2', {
+        state: 'test',
+        nonce: testData.nonce
+      } as passport.AuthenticateOptions));
 
 app.get(
     '/callback',

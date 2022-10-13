@@ -29,6 +29,7 @@ export const testData = {
   callbackURL: 'https://example_callback.com',
   scope: 'apps:beta',
   nonce: 'some_nonce_value',
+  tenantId: uuidv4(),
 };
 
 /**
@@ -56,8 +57,6 @@ export function setupExpressApp(): Application {
         scopeSeparator: ' ',
         state: true,
         passReqToCallback: true,
-        nonce: testData.nonce,
-        // profileFunc,
       },
       // Callback function called with the
       // data fetched as part of authentication
