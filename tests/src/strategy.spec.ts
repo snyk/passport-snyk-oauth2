@@ -3,16 +3,61 @@
  * with very little code change. Most of the test cases
  * are already covered.
  */
-import { testData, setupExpressApp } from '../helpers/setupApp';
+import { setupExpressApp } from '../helpers/setupApp';
 import supertest from 'supertest';
 import passport from 'passport';
+import SnykOAuth2Strategy from '../../src';
+
+/**
+ * Data required fro Snyk OAuth2 Strategy.
+ * It is used in other places, so stored in
+ * a separate constant.
+ */
+export const testData = {
+  authorizationURL: 'https://example_authorization.com/authorize',
+  tokenURL: 'https://example_token.com/token',
+  clientID: 'test',
+  clientSecret: 'test',
+  callbackURL: 'https://example_callback.com',
+  scope: 'apps:beta',
+  nonce: 'some_nonce_value',
+};
 
 describe('Strategy with passport', () => {
-  const app = setupExpressApp();
+  const snykOAuth2 = new SnykOAuth2Strategy(
+    {
+      authorizationURL: testData.authorizationURL,
+      tokenURL: testData.tokenURL,
+      clientID: testData.clientID,
+      clientSecret: testData.clientSecret,
+      callbackURL: testData.callbackURL,
+      scope: testData.scope,
+      scopeSeparator: ' ',
+      state: true,
+      passReqToCallback: true,
+      nonce: testData.nonce,
+      // profileFunc,
+    },
+    // Callback function called with the
+    // data fetched as part of authentication
+    (done: any) => {
+      // Notify passport that all work, like storing
+      // of data in DB has been completed
+      done(null, 'Done!');
+    },
+  );
+  const app = setupExpressApp(snykOAuth2);
   const request = supertest(app);
 
   // This will trigger the auth flow
-  app.get('/auth', passport.authenticate('snyk-oauth2', { state: 'test' }));
+  app.get(
+    '/auth',
+    (req, res, next) => {
+      snykOAuth2.nonce = testData.nonce;
+      next();
+    },
+    passport.authenticate('snyk-oauth2', { state: 'test' }),
+  );
   app.get(
     '/callback',
     passport.authenticate('snyk-oauth2', {
@@ -34,6 +79,7 @@ describe('Strategy with passport', () => {
     // It only provides a meaning when served with a 3xx (redirection) or 201 (created) status response.
     expect(response.statusCode).toBe(302);
     const redirectURL = new URL(response.header.location);
+    console.log(response.headers.location);
     // Assert
     // The authorization URL
     expect(`${redirectURL.origin}${redirectURL.pathname}`).toBe(testData.authorizationURL);

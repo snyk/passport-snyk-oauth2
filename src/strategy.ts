@@ -12,23 +12,39 @@ export default class SnykOAuth2Strategy extends Strategy {
    * profileFunc: is called is user wants to call any Snyk API
    * to get profile for their records
    */
-  private _nonce: string;
+  private _nonce = '';
+  private _tenantId = '';
   private _profileFunc?: ProfileFunc;
 
   constructor(options: SnykStrategyOptions, verify: VerifyFunctionWithRequest) {
     super(options, verify);
-    this._nonce = options.nonce;
     this.name = 'snyk-oauth2';
     if (options.profileFunc) this._profileFunc = options.profileFunc;
+  }
+
+  public set nonce(value: string) {
+    this._nonce = value;
+  }
+
+  public set tenantId(value: string) {
+    this._tenantId = value;
   }
 
   /**
    * Function adds the nonce value to the URL being called for authentication
    */
   authorizationParams(): any {
-    return {
-      nonce: this._nonce,
-    };
+    const params: any = {};
+    if (this._nonce) {
+      params.nonce = this._nonce;
+    } else {
+      throw new Error('nonce value required');
+    }
+
+    if (this._tenantId) {
+      params.tenant_id = this._tenantId;
+    }
+    return params;
   }
 
   /**
