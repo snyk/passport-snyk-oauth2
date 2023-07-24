@@ -1,3 +1,7 @@
+# DEPRECATED
+
+This package is deprecated in favor of [passport-oauth2](https://www.passportjs.org/packages/passport-oauth2/). For more information on how to use [passport-oauth2](https://www.passportjs.org/packages/passport-oauth2/) with [Snyk Apps](https://docs.snyk.io/snyk-api-info/snyk-apps), please refer to our [Snyk Apps Demo](https://github.com/snyk/snyk-apps-demo) repository.
+
 # @snyk/passport-snyk-oauth2
 
 Snyk's OAuth2 strategy for [Passportjs](https://www.passportjs.org/) to make authenticating Snyk Apps a seamless experience. 
